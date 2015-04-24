@@ -13,12 +13,16 @@ import requests
 from json import loads
 
 from config.constants import *
+from DB.sqlalchemy_insert import  insert
+
+
+
 
 query = loads(requests.get(BASE+VERSION+FORMAT+"all-items/"+CRAFTING_MATERIAL).text)
 
 print("Fetched data of [{itemcount}] items...".format(itemcount=query["count"]))
 
-print(query)
+#print(query)
 
 # item is a dict, describing one item. interesting keys::
 # 'name'
@@ -32,3 +36,12 @@ print(query)
 
 # for item in query["results"]:
 #     ~ do stuff
+
+print("Crunching numbers...")
+for item in query["results"]:
+    name = item["name"]
+    price = item["min_sale_unit_price"]
+
+    offers = item["offer_availability"]
+    # only interesting items...
+
